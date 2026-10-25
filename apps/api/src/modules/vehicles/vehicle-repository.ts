@@ -40,5 +40,5 @@ export interface VehicleRepository {
   update(id: string, input: VehicleDetails): Promise<StoredVehicle | null>;
   delete(id: string): Promise<boolean>;
   purchase(id: string): Promise<PurchaseResult>;
-  restock(id: string, quantity: number): Promise<StoredVehicle | null>;
+  restock(id: string, quantity: number): Promise<StoredVehicle | null | "LIMIT_EXCEEDED">;
 }

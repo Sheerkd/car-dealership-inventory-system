@@ -51,6 +51,7 @@ class MemoryVehicles implements VehicleRepository {
   async restock(id: string, quantity: number) {
     const vehicle = await this.findById(id);
     if (!vehicle) return null;
+    if (vehicle.quantity + quantity > 1_000_000) return "LIMIT_EXCEEDED" as const;
     vehicle.quantity += quantity;
     return { ...vehicle };
   }

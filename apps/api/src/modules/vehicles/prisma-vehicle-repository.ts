@@ -81,16 +81,16 @@ export class PrismaVehicleRepository implements VehicleRepository {
     });
   }
 
-  async restock(id: string, quantity: number) {
-    try {
-      const vehicle = await prisma.vehicle.update({
-        where: { id },
+  async restock(id: string, quantity: number): Promise<StoredVehicle | null | "LIMIT_EXCEEDED"> {
+    return prisma.$transaction(async (transaction) => {
+      const changed = await transaction.vehicle.updateMany({
+        where: { id, quantity: { lte: 1_000_000 - quantity } },
         data: { quantity: { increment: quantity } },
       });
+      const vehicle = await transaction.vehicle.findUnique({ where: { id } });
+      if (!vehicle) return null;
+      if (changed.count === 0) return "LIMIT_EXCEEDED";
       return toStoredVehicle(vehicle);
-    } catch (error) {
-      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2025") return null;
-      throw error;
-    }
+    });
   }
 }

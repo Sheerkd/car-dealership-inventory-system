@@ -95,6 +95,7 @@ export function vehicleRoutes(auth: AuthService, vehicles: VehicleRepository) {
     const body = restockSchema.safeParse(request.body);
     if (!id.success || !body.success) return error(response, 400, "VALIDATION_ERROR", "Restock request is invalid.");
     const vehicle = await vehicles.restock(id.data, body.data.quantity);
+    if (vehicle === "LIMIT_EXCEEDED") return error(response, 400, "STOCK_LIMIT_EXCEEDED", "Vehicle stock cannot exceed 1,000,000 units.");
     if (!vehicle) return error(response, 404, "NOT_FOUND", "Vehicle not found.");
     response.status(200).json({ vehicle });
   });
