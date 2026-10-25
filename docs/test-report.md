@@ -36,7 +36,11 @@ On 25 October 2026, a second local run used Vitest's V8 provider against a tempo
 
 These figures include startup scripts, entry points, and type-only repository files. The API's route and service files have stronger line coverage: authentication routes 96.66%, authentication service 96.22%, vehicle routes 100%, and the Prisma vehicle repository 89.28%. The broad API line percentage is lower because startup scripts and type-only files are not exercised by the Vitest process. This is a measured result, not a claim that every source line is covered.
 
-The updated production build passed. With the built web app served by Express, local HTTP checks returned 200 for `/` and a direct browser route, and `/api/health` returned `ok`. These checks do not establish a live hosted deployment.
+The updated production build passed. With the built web app served by Express, local HTTP checks returned 200 for `/` and a direct browser route, and `/api/health` returned `ok`.
+
+## Live deployment smoke checks
+
+On 25 October 2026, Render reported the web service deployed and the PostgreSQL database available. At the [live URL](https://car-dealership-inventory-z1tg.onrender.com/), the React sign-in page loaded and `/api/health` returned `{"status":"ok"}`. A login attempt using a synthetic, nonexistent address returned the expected invalid-credentials message. The login path calls the PostgreSQL user repository, so that result also checks a database-backed request without creating test data. These are read-only smoke checks; a full customer purchase and admin management journey has not been run against the hosted database.
 
 ## Reproduce the full check
 
@@ -54,8 +58,8 @@ The GitHub Actions workflow in [`.github/workflows/checks.yml`](../.github/workf
 
 ## GitHub Actions result
 
-The [Checks workflow run for commit `39c7e54`](https://github.com/Sheerkd/car-dealership-inventory-system/actions/runs/40202548172) completed successfully on 25 October 2026. It ran the configured frozen install, PostgreSQL migration and admin setup, type checks, API and frontend tests, production build, and Playwright journey on GitHub Actions. This remote result is separate from the local clean-checkout run above.
+The [Checks workflow run for commit `39c7e54`](https://github.com/Sheerkd/car-dealership-inventory-system/actions/runs/40202548172) completed successfully on 25 October 2026. It ran the configured frozen install, PostgreSQL migration and admin setup, type checks, API and frontend tests, production build, and Playwright journey on GitHub Actions. The [later run for `b788231`](https://github.com/Sheerkd/car-dealership-inventory-system/actions/runs/40212156128) also passed, including the coverage command. These remote results are separate from the local clean-checkout and coverage runs above.
 
 ## Limits of this report
 
-The clean-checkout run was **local**; the linked GitHub Actions result provides a separate remote check. No hosted deployment, non-Chromium browser result, or human manual test is claimed. The project repository had no commits at the time of the local run. The initial implementation is now recorded in AI-authored snapshot commit `ac3e882` in the [public repository](https://github.com/Sheerkd/car-dealership-inventory-system). That snapshot does not establish the brief's requested red–green–refactor history.
+The clean-checkout and coverage runs were **local**; the linked GitHub Actions results provide separate remote checks. Hosted smoke checks cover the sign-in page, API health, and invalid login only. No hosted full customer/admin journey, non-Chromium browser result, or human manual test is claimed. The project repository had no commits at the time of the original local run. The initial implementation is now recorded in AI-authored snapshot commit `ac3e882` in the [public repository](https://github.com/Sheerkd/car-dealership-inventory-system). That snapshot does not establish the brief's requested red–green–refactor history.

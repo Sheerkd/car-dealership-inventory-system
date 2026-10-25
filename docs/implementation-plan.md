@@ -13,6 +13,6 @@ Complete each phase in sequence. A phase is complete only when its acceptance ch
 | 7. Admin UI | Add, edit, delete, restock | Complete: admin sign-in, create, edit, sold-out restock, browse/manage navigation, and confirmed delete passed in a browser against PostgreSQL 17; seven admin UI tests passed |
 | 8. Quality | Accessibility, error handling, end-to-end checks | Complete: a temporary Git snapshot was cloned and passed frozen install, migrations, admin setup, 55 database-backed/API/UI tests, typecheck, production build, and a Playwright browser journey |
 | 9. Submission | README, screenshots, test report, AI record, public repository | Complete: the [public repository](https://github.com/Sheerkd/car-dealership-inventory-system), README, screenshots, test report, raw AI record, and remote CI are verified; the historical test-first commit sequence remains unproven |
-| 10. Optional deployment | Hosted application | Prepared: Render Blueprint, build, and local HTTP smoke checks passed; hosted provisioning and live smoke checks remain pending |
+| 10. Optional deployment | Hosted application | Complete: Render web service and PostgreSQL are deployed; live sign-in, API health, and database-backed invalid-login smoke checks passed |
 
 For every AI-assisted commit, describe the AI assistance and any manual work actually performed. Never claim manual coding or testing that did not occur. Raw, unedited AI conversation records are preserved in the repository's PROMPTS.md.

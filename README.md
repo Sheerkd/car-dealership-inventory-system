@@ -4,6 +4,8 @@ A full-stack inventory application for a car dealership. Customers can register,
 
 Public source: [Sheerkd/car-dealership-inventory-system](https://github.com/Sheerkd/car-dealership-inventory-system).
 
+Live demo: [Car Dealership Inventory](https://car-dealership-inventory-z1tg.onrender.com/).
+
 ## Features
 
 | Area | Included behavior |
@@ -45,7 +47,7 @@ The root [Render Blueprint](render.yaml) defines one web service and one Postgre
 3. Render will prompt for `ADMIN_NAME`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD`. Choose a private admin email and a password of at least 12 characters. Render generates `JWT_SECRET` and connects `DATABASE_URL` to its PostgreSQL service. Never commit these values or paste them into a chat.
 4. Review the two resources and select **Deploy Blueprint**. When deployment finishes, open the web service URL, register a customer, sign in as admin, create a vehicle, and check the customer purchase flow.
 
-The Blueprint selects Render's free plans for a short-lived demo. Render's free PostgreSQL database expires after 30 days, so this setup is not suitable for durable data. See [Render's free-plan limits](https://render.com/docs/free). A hosted deployment has not yet been performed or smoke-tested; local production-build and static-route checks are recorded in the [test report](docs/test-report.md).
+The Blueprint selects Render's free plans for a short-lived demo. Render's free PostgreSQL database expires after 30 days, so this setup is not suitable for durable data. See [Render's free-plan limits](https://render.com/docs/free). The live sign-in page, API health endpoint, and database-backed invalid-login response were checked after deployment; the [test report](docs/test-report.md) records their scope.
 
 ## Check the project
 
