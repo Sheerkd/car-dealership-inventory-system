@@ -41,4 +41,4 @@ The GitHub Actions workflow in [`.github/workflows/checks.yml`](../.github/workf
 
 ## Limits of this report
 
-This was a **local** clean-checkout run. No remote CI run, hosted deployment, non-Chromium browser result, or human manual test is claimed. The project repository had no commits at the time of the run. The initial implementation is now recorded in local AI-authored snapshot commit `ac3e882`, with no public remote. That snapshot does not establish the brief's requested red–green–refactor history.
+This was a **local** clean-checkout run. No remote CI run, hosted deployment, non-Chromium browser result, or human manual test is claimed. The project repository had no commits at the time of the run. The initial implementation is now recorded in AI-authored snapshot commit `ac3e882` and pushed to GitHub. That snapshot does not establish the brief's requested red–green–refactor history, and the repository is not yet publicly accessible.
