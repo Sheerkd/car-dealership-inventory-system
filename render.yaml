@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: car-dealership-inventory
+    runtime: node
+    plan: free
+    buildCommand: corepack enable && pnpm install --frozen-lockfile --prod=false && pnpm --filter @dealership/api db:generate && pnpm build
+    startCommand: pnpm --filter @dealership/api db:deploy && pnpm --filter @dealership/api admin:bootstrap && pnpm --filter @dealership/api start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: SERVE_WEB
+        value: "true"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: car-dealership-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_NAME
+        sync: false
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+
+databases:
+  - name: car-dealership-db
+    plan: free

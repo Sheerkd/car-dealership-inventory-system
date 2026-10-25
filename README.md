@@ -36,6 +36,17 @@ Use Node.js 22, pnpm 11.25.0, and Docker with Compose. The checked-in workflow u
 
 The web app calls `http://localhost:3001` by default. If the API runs elsewhere, create `apps/web/.env` with `VITE_API_URL=<api-origin>`. Set `CORS_ORIGIN` in `apps/api/.env` to the frontend origin when it differs from `http://localhost:5173`. If you change the database port in `compose.yaml`, update `DATABASE_URL` too. The [API contract](docs/api-contract.md) lists routes, request bodies, responses, and errors.
 
+## Deploy on Render
+
+The root [Render Blueprint](render.yaml) defines one web service and one PostgreSQL database. The web service serves the built React app and API from the same origin. The Blueprint builds both apps, applies database migrations, and creates the first admin account if it does not already exist. It does not reset an existing admin's password.
+
+1. In Render, connect the GitHub account that owns this repository under **Account Settings → Account Security → Git Deployment Credentials**.
+2. After this `render.yaml` has been pushed, select **New → Blueprint**, connect this repository, select the `master` branch, and keep the Blueprint path as `render.yaml`.
+3. Render will prompt for `ADMIN_NAME`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD`. Choose a private admin email and a password of at least 12 characters. Render generates `JWT_SECRET` and connects `DATABASE_URL` to its PostgreSQL service. Never commit these values or paste them into a chat.
+4. Review the two resources and select **Deploy Blueprint**. When deployment finishes, open the web service URL, register a customer, sign in as admin, create a vehicle, and check the customer purchase flow.
+
+The Blueprint selects Render's free plans for a short-lived demo. Render's free PostgreSQL database expires after 30 days, so this setup is not suitable for durable data. See [Render's free-plan limits](https://render.com/docs/free). A hosted deployment has not yet been performed or smoke-tested; local production-build and static-route checks are recorded in the [test report](docs/test-report.md).
+
 ## Check the project
 
 The default commands check types, run tests that do not require a live database, and build both applications:
@@ -43,6 +54,7 @@ The default commands check types, run tests that do not require a live database,
 ```sh
 pnpm typecheck
 pnpm test
+pnpm coverage
 pnpm build
 ```
 

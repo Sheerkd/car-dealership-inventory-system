@@ -41,7 +41,7 @@ jobs:
       - run: pnpm --filter @dealership/api db:deploy
       - run: pnpm --filter @dealership/api admin:create
       - run: pnpm typecheck
-      - run: pnpm test
+      - run: pnpm coverage
       - run: pnpm build
       - run: pnpm exec playwright install --with-deps --only-shell chromium
       - run: pnpm test:e2e

@@ -7,7 +7,7 @@ type SearchResult = { vehicles: Vehicle[]; total: number; page: number; pageSize
 type Filters = { make: string; model: string; category: string; minPrice: string; maxPrice: string; inStock: boolean; sort: string };
 type Session = { accessToken: string; user: User };
 
-const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:3001").replace(/\/$/, "");
+const API_URL = (import.meta.env.VITE_API_URL || (import.meta.env.DEV ? "http://localhost:3001" : window.location.origin)).replace(/\/$/, "");
 const emptyFilters: Filters = { make: "", model: "", category: "", minPrice: "", maxPrice: "", inStock: false, sort: "newest" };
 
 class ApiError extends Error {

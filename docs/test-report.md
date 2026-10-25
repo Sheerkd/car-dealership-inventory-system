@@ -25,6 +25,19 @@ The database concurrency test confirmed that two purchases competing for the fin
 
 The suite includes API and React tests, PostgreSQL integration tests, and an end-to-end browser test. The database tests run only when `RUN_DB_TESTS=1` and the required database and test admin settings are present. The counts above come from the full configured run.
 
+## Coverage measurement and deployment preparation
+
+On 25 October 2026, a second local run used Vitest's V8 provider against a temporary PostgreSQL 17 database. All **36 API tests and 20 frontend tests passed**, including the new static-web routing test. The database migrations applied, and the deployment admin bootstrap command succeeded both when creating the admin and when run again. The coverage process exited successfully. Run `pnpm coverage` with the same database settings to reproduce the measurement; output is written under the ignored `coverage/` directory.
+
+| Source set | Lines | Branches | Functions |
+| --- | ---: | ---: | ---: |
+| API `src/**/*.ts` | 69.84% | 87.33% | 82.85% |
+| Web `src/**/*.{ts,tsx}` | 96.67% | 84.30% | 80.59% |
+
+These figures include startup scripts, entry points, and type-only repository files. The API's route and service files have stronger line coverage: authentication routes 96.66%, authentication service 96.22%, vehicle routes 100%, and the Prisma vehicle repository 89.28%. The broad API line percentage is lower because startup scripts and type-only files are not exercised by the Vitest process. This is a measured result, not a claim that every source line is covered.
+
+The updated production build passed. With the built web app served by Express, local HTTP checks returned 200 for `/` and a direct browser route, and `/api/health` returned `ok`. These checks do not establish a live hosted deployment.
+
 ## Reproduce the full check
 
 Follow the [README local setup](../README.md#run-locally) with a disposable database. After migration and admin creation, set `RUN_DB_TESTS=1`, `TEST_ADMIN_EMAIL`, and `TEST_ADMIN_PASSWORD` to the provisioned admin credentials. Then run:
