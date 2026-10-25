@@ -1,0 +1,11 @@
+node_modules/
+.pnpm-store/
+.local-postgres/
+dist/
+*.tsbuildinfo
+coverage/
+.env
+.env.*.local
+.DS_Store
+playwright-report/
+test-results/

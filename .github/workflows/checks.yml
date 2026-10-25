@@ -1,0 +1,47 @@
+name: Checks
+
+on: [push, pull_request]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: dealership
+          POSTGRES_PASSWORD: dealership
+          POSTGRES_DB: dealership
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U dealership -d dealership"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://dealership:dealership@localhost:5432/dealership?schema=public
+      RUN_DB_TESTS: "1"
+      ADMIN_NAME: Verification Admin
+      ADMIN_EMAIL: verification-admin@example.com
+      ADMIN_PASSWORD: VerificationPassword123!
+      TEST_ADMIN_EMAIL: verification-admin@example.com
+      TEST_ADMIN_PASSWORD: VerificationPassword123!
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @dealership/api db:generate
+      - run: pnpm --filter @dealership/api db:deploy
+      - run: pnpm --filter @dealership/api admin:create
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
+      - run: pnpm exec playwright install --with-deps --only-shell chromium
+      - run: pnpm test:e2e
