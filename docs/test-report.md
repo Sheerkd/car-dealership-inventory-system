@@ -39,6 +39,10 @@ pnpm test:e2e
 
 The GitHub Actions workflow in [`.github/workflows/checks.yml`](../.github/workflows/checks.yml) configures PostgreSQL and performs the same categories of checks on push and pull request.
 
+## GitHub Actions result
+
+The [Checks workflow run for commit `39c7e54`](https://github.com/Sheerkd/car-dealership-inventory-system/actions/runs/40202548172) completed successfully on 25 October 2026. It ran the configured frozen install, PostgreSQL migration and admin setup, type checks, API and frontend tests, production build, and Playwright journey on GitHub Actions. This remote result is separate from the local clean-checkout run above.
+
 ## Limits of this report
 
-This was a **local** clean-checkout run. No remote CI run, hosted deployment, non-Chromium browser result, or human manual test is claimed. The project repository had no commits at the time of the run. The initial implementation is now recorded in AI-authored snapshot commit `ac3e882` and pushed to GitHub. That snapshot does not establish the brief's requested red–green–refactor history, and the repository is not yet publicly accessible.
+The clean-checkout run was **local**; the linked GitHub Actions result provides a separate remote check. No hosted deployment, non-Chromium browser result, or human manual test is claimed. The project repository had no commits at the time of the local run. The initial implementation is now recorded in AI-authored snapshot commit `ac3e882` in the [public repository](https://github.com/Sheerkd/car-dealership-inventory-system). That snapshot does not establish the brief's requested red–green–refactor history.

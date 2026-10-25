@@ -2,6 +2,8 @@
 
 A full-stack inventory application for a car dealership. Customers can register, sign in, search the catalogue, and purchase one available unit. Administrators can add listings, update vehicle details, restock, and delete listings. A purchase changes stock only; payment and order processing are outside this kata.
 
+Public source: [Sheerkd/car-dealership-inventory-system](https://github.com/Sheerkd/car-dealership-inventory-system).
+
 ## Features
 
 | Area | Included behavior |
@@ -60,7 +62,7 @@ pnpm exec playwright install --only-shell chromium
 pnpm test:e2e
 ```
 
-The browser test creates a customer and a temporary vehicle listing, then runs customer purchase and admin management against the same database. Run it only against a disposable database. The CI workflow is configured to repeat the full sequence on pushes and pull requests using a PostgreSQL service; no remote CI result is claimed in the [local test report](docs/test-report.md).
+The browser test creates a customer and a temporary vehicle listing, then runs customer purchase and admin management against the same database. Run it only against a disposable database. The CI workflow repeats the full sequence on pushes and pull requests using a PostgreSQL service. The [Checks run for commit `39c7e54`](https://github.com/Sheerkd/car-dealership-inventory-system/actions/runs/40202548172) passed; the [test report](docs/test-report.md) distinguishes this remote result from local verification.
 
 ## Application screenshots
 
@@ -92,4 +94,4 @@ I used **OpenAI Codex** to work through this project phase by phase. The convers
 
 Codex also ran the local checks reported in the [test report](docs/test-report.md): a frozen install from a temporary clean checkout, migration and admin setup against PostgreSQL, 35 API tests, 20 frontend tests, type checks, builds, and one Playwright journey. These were **automated checks executed by Codex**. Human code edits and manual test execution have not been recorded, so they are not claimed here. The initial implementation is recorded in AI-authored snapshot commit `ac3e882`; it does not establish a red–green–refactor history for Phases 1–8.
 
-AI helped move from the requirements to an integrated application quickly, especially across the API, database, interface, and tests. It also made verification essential: generated code still needed checks against a real PostgreSQL database, concurrency cases, and the browser workflow. The local results establish what passed in that environment; they do not replace a contributor's own review or a remote CI run. The snapshot is authored by Codex, without a human co-author claim. Future human-authored commits with AI assistance should describe the actual work and include an AI co-author trailer, while describing manual work only when it was performed.
+AI helped move from the requirements to an integrated application quickly, especially across the API, database, interface, and tests. It also made verification essential: generated code still needed checks against a real PostgreSQL database, concurrency cases, and the browser workflow. The local and CI results establish what passed in those environments; they do not replace a contributor's own review. The snapshot is authored by Codex, without a human co-author claim. Future human-authored commits with AI assistance should describe the actual work and include an AI co-author trailer, while describing manual work only when it was performed.
