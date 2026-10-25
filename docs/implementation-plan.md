@@ -12,7 +12,7 @@ Complete each phase in sequence. A phase is complete only when its acceptance ch
 | 6. Customer UI | Auth, inventory, filters, purchasing | Complete: registration, sign-in, stock filtering, final-unit purchase, and sold-out display passed in a browser against PostgreSQL 17; seven customer UI tests passed |
 | 7. Admin UI | Add, edit, delete, restock | Complete: admin sign-in, create, edit, sold-out restock, browse/manage navigation, and confirmed delete passed in a browser against PostgreSQL 17; seven admin UI tests passed |
 | 8. Quality | Accessibility, error handling, end-to-end checks | Complete: a temporary Git snapshot was cloned and passed frozen install, migrations, admin setup, 55 database-backed/API/UI tests, typecheck, production build, and a Playwright browser journey |
-| 9. Submission | README, screenshots, test report, AI record, public repository | In progress: README, screenshots, test report, and raw chat record are prepared; publication review and the public repository remain |
+| 9. Submission | README, screenshots, test report, AI record, public repository | In progress: README, screenshots, test report, and raw chat record are prepared; one AI-authored local snapshot commit exists, while chat-log review and a public repository remain |
 | 10. Optional deployment | Hosted application | Live smoke checks pass |
 
 For every AI-assisted commit, describe the AI assistance and any manual work actually performed. Never claim manual coding or testing that did not occur. Preserve raw AI conversations or public chat links in PROMPTS.md.
