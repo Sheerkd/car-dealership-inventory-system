@@ -16,3 +16,5 @@ Complete each phase in sequence. A phase is complete only when its acceptance ch
 | 10. Optional deployment | Hosted application | Complete: Render web service and PostgreSQL are deployed; live sign-in, API health, and database-backed invalid-login smoke checks passed |
 
 For every AI-assisted commit, describe the AI assistance and any manual work actually performed. Never claim manual coding or testing that did not occur. Raw, unedited AI conversation records are preserved in the repository's PROMPTS.md.
+
+The later coverage follow-up passed 42 API and 20 frontend tests against a temporary PostgreSQL database. It raised broad API line coverage to 81.95% and added minimum coverage gates. Commits `5e4b52f`, `233e575`, and `d752b7c` record a genuine test-first sequence for this follow-up only; the historical sequence for Phases 1–8 remains unproven.

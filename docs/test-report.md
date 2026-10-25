@@ -27,14 +27,16 @@ The suite includes API and React tests, PostgreSQL integration tests, and an end
 
 ## Coverage measurement and deployment preparation
 
-On 25 October 2026, a second local run used Vitest's V8 provider against a temporary PostgreSQL 17 database. All **36 API tests and 20 frontend tests passed**, including the new static-web routing test. The database migrations applied, and the deployment admin bootstrap command succeeded both when creating the admin and when run again. The coverage process exited successfully. Run `pnpm coverage` with the same database settings to reproduce the measurement; output is written under the ignored `coverage/` directory.
+On 25 October 2026, the latest local run used Vitest's V8 provider against a temporary PostgreSQL 17 database. All **42 API tests and 20 frontend tests passed**, including startup configuration, admin provisioning, and static-web routing tests. The database migrations applied, and the deployment admin bootstrap command succeeded both when creating the admin and when run again. The coverage process exited successfully. Run `pnpm coverage` with the same database settings to reproduce the measurement; output is written under the ignored `coverage/` directory.
 
 | Source set | Lines | Branches | Functions |
 | --- | ---: | ---: | ---: |
-| API `src/**/*.ts` | 69.84% | 87.33% | 82.85% |
+| API `src/**/*.ts` | 81.95% | 88.82% | 91.66% |
 | Web `src/**/*.{ts,tsx}` | 96.67% | 84.30% | 80.59% |
 
-These figures include startup scripts, entry points, and type-only repository files. The API's route and service files have stronger line coverage: authentication routes 96.66%, authentication service 96.22%, vehicle routes 100%, and the Prisma vehicle repository 89.28%. The broad API line percentage is lower because startup scripts and type-only files are not exercised by the Vitest process. This is a measured result, not a claim that every source line is covered.
+These figures include startup scripts, entry points, and type-only repository files; the type-only files count as uncovered because they do not execute at runtime. The API's route and service files have stronger line coverage: authentication routes 96.66%, authentication service 96.22%, vehicle routes 100%, and the Prisma vehicle repository 89.28%. Startup and admin provisioning behavior now has dedicated tests. Vitest enforces minimum API coverage of 80% lines, 85% branches, and 85% functions, plus frontend minimums of 90% lines, 80% branches, and 75% functions. This is a measured result, not a claim that every source line is covered.
+
+The coverage improvement has a genuine test-first sequence: commit `5e4b52f` recorded failing startup tests, `233e575` made them pass, and `d752b7c` refactored shared admin validation while keeping the suite green. This later sequence does not establish how Phases 1–8 were originally built.
 
 The updated production build passed. With the built web app served by Express, local HTTP checks returned 200 for `/` and a direct browser route, and `/api/health` returned `ok`.
 
@@ -49,6 +51,7 @@ Follow the [README local setup](../README.md#run-locally) with a disposable data
 ```sh
 pnpm typecheck
 pnpm test
+pnpm coverage
 pnpm build
 pnpm exec playwright install --only-shell chromium
 pnpm test:e2e
