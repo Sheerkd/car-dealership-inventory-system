@@ -90,7 +90,7 @@ The earlier [sold-out purchase](docs/screenshots/phase6-sold-out.png) and [admin
 
 ## My AI Usage
 
-I used **OpenAI Codex** to work through this project phase by phase. The conversation began with architecture and an implementation plan based on the supplied brief. Codex generated and revised the TypeScript API, Prisma schema and migrations, React interface, automated tests, browser journey, CI workflow, and documentation. I used the conversation to direct the order of phases and the requested style of AI disclosure. The verbatim chat record is retained locally and excluded from this repository.
+I used **OpenAI Codex** to work through this project phase by phase. The conversation began with architecture and an implementation plan based on the supplied brief. Codex generated and revised the TypeScript API, Prisma schema and migrations, React interface, automated tests, browser journey, CI workflow, and documentation. I used the conversation to direct the order of phases and the requested style of AI disclosure. The verbatim conversation records are in [PROMPTS.md](PROMPTS.md).
 
 Codex also ran the local checks reported in the [test report](docs/test-report.md): a frozen install from a temporary clean checkout, migration and admin setup against PostgreSQL, 35 API tests, 20 frontend tests, type checks, builds, and one Playwright journey. These were **automated checks executed by Codex**. Human code edits and manual test execution have not been recorded, so they are not claimed here. The initial implementation is recorded in AI-authored snapshot commit `ac3e882`; it does not establish a red–green–refactor history for Phases 1–8.
 
