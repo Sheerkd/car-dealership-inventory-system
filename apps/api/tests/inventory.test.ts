@@ -118,6 +118,21 @@ describe("inventory API", () => {
     expect((await vehicles.findById(listed.id))?.quantity).toBe(3);
   });
 
+  it("does not let a restock raise stock above the listing limit", async () => {
+    const listed = await vehicles.create({ ...vehicle, quantity: 999_999 });
+    const token = await bearer("ADMIN");
+    const url = `/api/vehicles/${listed.id}/restock`;
+
+    const rejected = await request(api()).post(url).set("Authorization", token).send({ quantity: 2 });
+    expect(rejected.status).toBe(400);
+    expect(rejected.body.error.code).toBe("STOCK_LIMIT_EXCEEDED");
+    expect((await vehicles.findById(listed.id))?.quantity).toBe(999_999);
+
+    const accepted = await request(api()).post(url).set("Authorization", token).send({ quantity: 1 });
+    expect(accepted.status).toBe(200);
+    expect(accepted.body.vehicle.quantity).toBe(1_000_000);
+  });
+
   it("rejects invalid restock amounts without changing stock", async () => {
     const listed = await vehicles.create({ ...vehicle, quantity: 2 });
     const token = await bearer("ADMIN");

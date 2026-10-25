@@ -77,4 +77,16 @@ describe.skipIf(!runDatabaseTests)("inventory with PostgreSQL", () => {
     expect(purchase.body.vehicle.quantity).toBe(2);
     expect((await prisma.vehicle.findUnique({ where: { id } }))?.quantity).toBe(2);
   });
+
+  it("allows only one concurrent restock at the listing limit", async () => {
+    const id = await vehicleWithStock(999_999);
+    const url = `/api/vehicles/${id}/restock`;
+    const restock = () => request(app).post(url).set("Authorization", adminBearer).send({ quantity: 1 });
+
+    const [first, second] = await Promise.all([restock(), restock()]);
+    expect([first.status, second.status].sort()).toEqual([200, 400]);
+    const rejected = first.status === 400 ? first : second;
+    expect(rejected.body.error.code).toBe("STOCK_LIMIT_EXCEEDED");
+    expect((await prisma.vehicle.findUnique({ where: { id } }))?.quantity).toBe(1_000_000);
+  });
 });
