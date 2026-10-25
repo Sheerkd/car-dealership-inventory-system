@@ -17,4 +17,4 @@ Complete each phase in sequence. A phase is complete only when its acceptance ch
 
 For every AI-assisted commit, describe the AI assistance and any manual work actually performed. Never claim manual coding or testing that did not occur. Raw, unedited AI conversation records are preserved in the repository's PROMPTS.md.
 
-The later coverage follow-up passed 42 API and 20 frontend tests against a temporary PostgreSQL database. It raised broad API line coverage to 81.95% and added minimum coverage gates. Commits `5e4b52f`, `233e575`, and `d752b7c` record a genuine test-first sequence for this follow-up only; the historical sequence for Phases 1–8 remains unproven.
+The later coverage and inventory follow-ups passed 44 API and 20 frontend tests against a temporary PostgreSQL database. Broad API line coverage reached 82.56%, with minimum coverage gates. Commits `5e4b52f` through `d752b7c` and `1fff7f7` through `49c9010` record two genuine test-first backend sequences. The [TDD evidence](tdd-evidence.md) records their scope; the historical sequence for Phases 1–8 remains unproven.

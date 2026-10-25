@@ -75,7 +75,7 @@ Success returns `{ "vehicles": [...], "total": 4, "page": 1, "pageSize": 12, "to
 
 `POST /api/vehicles/:id/purchase` requires a signed-in user. Send no request body or `{}`. Each successful request buys exactly one unit and returns `200` with the updated `vehicle`. The database decreases stock only when the current quantity is above zero, so concurrent requests cannot oversell. A sold-out vehicle returns `409` with error code `OUT_OF_STOCK`; a missing vehicle returns `404`. A supplied purchase quantity is rejected with `400`. This action changes inventory only; payment and order processing are outside the project scope.
 
-`POST /api/vehicles/:id/restock` requires an admin. Send `{ "quantity": 3 }`, where quantity is an integer from 1 to 1,000,000. Success returns `200` with the updated `vehicle`. Invalid amounts return `400`, a missing vehicle returns `404`, and a regular user receives `403`.
+`POST /api/vehicles/:id/restock` requires an admin. Send `{ "quantity": 3 }`, where quantity is an integer from 1 to 1,000,000. Success returns `200` with the updated `vehicle`. Total stock cannot exceed 1,000,000, including when requests arrive concurrently; an over-limit restock returns `400` with code `STOCK_LIMIT_EXCEEDED` and leaves stock unchanged. Other invalid amounts return `400`, a missing vehicle returns `404`, and a regular user receives `403`.
 
 ## General API errors
 
