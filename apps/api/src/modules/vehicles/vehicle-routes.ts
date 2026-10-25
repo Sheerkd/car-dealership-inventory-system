@@ -2,7 +2,7 @@ import { Router } from "express";
 import { z } from "zod";
 import { AuthService } from "../auth/auth-service.js";
 import { authenticate, requireRole } from "../auth/auth-routes.js";
-import type { VehicleRepository } from "./vehicle-repository.js";
+import { MAX_VEHICLE_QUANTITY, type VehicleRepository } from "./vehicle-repository.js";
 
 const textField = z.string().trim().min(1).max(80);
 const priceField = z.string().trim()
@@ -19,10 +19,10 @@ const detailsSchema = z.strictObject({
   category: textField,
   price: priceField,
 });
-const createSchema = detailsSchema.extend({ quantity: z.number().int().min(0).max(1_000_000) });
+const createSchema = detailsSchema.extend({ quantity: z.number().int().min(0).max(MAX_VEHICLE_QUANTITY) });
 const idSchema = z.uuid();
 const purchaseSchema = z.strictObject({});
-const restockSchema = z.strictObject({ quantity: z.number().int().min(1).max(1_000_000) });
+const restockSchema = z.strictObject({ quantity: z.number().int().min(1).max(MAX_VEHICLE_QUANTITY) });
 const searchText = z.string().trim().min(1).max(80).optional();
 const searchPrice = z.string().trim()
   .regex(/^(?:0|[1-9]\d{0,9})(?:\.\d{1,2})?$/)

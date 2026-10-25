@@ -1,3 +1,5 @@
+export const MAX_VEHICLE_QUANTITY = 1_000_000;
+
 export interface StoredVehicle {
   id: string;
   make: string;

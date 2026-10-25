@@ -1,6 +1,6 @@
 import { Prisma, type Vehicle } from "@prisma/client";
 import { prisma } from "../auth/prisma-user-repository.js";
-import type { NewVehicle, PurchaseResult, SearchQuery, StoredVehicle, VehicleDetails, VehicleRepository } from "./vehicle-repository.js";
+import { MAX_VEHICLE_QUANTITY, type NewVehicle, type PurchaseResult, type SearchQuery, type StoredVehicle, type VehicleDetails, type VehicleRepository } from "./vehicle-repository.js";
 
 function toStoredVehicle(vehicle: Vehicle): StoredVehicle {
   return {
@@ -84,7 +84,7 @@ export class PrismaVehicleRepository implements VehicleRepository {
   async restock(id: string, quantity: number): Promise<StoredVehicle | null | "LIMIT_EXCEEDED"> {
     return prisma.$transaction(async (transaction) => {
       const changed = await transaction.vehicle.updateMany({
-        where: { id, quantity: { lte: 1_000_000 - quantity } },
+        where: { id, quantity: { lte: MAX_VEHICLE_QUANTITY - quantity } },
         data: { quantity: { increment: quantity } },
       });
       const vehicle = await transaction.vehicle.findUnique({ where: { id } });
