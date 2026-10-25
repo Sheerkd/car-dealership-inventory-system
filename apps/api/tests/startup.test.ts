@@ -24,3 +24,13 @@ describe("API startup", () => {
     }
   });
 });
+
+describe("admin setup configuration", () => {
+  it("normalizes the email and requires a sufficiently long password", async () => {
+    const { parseAdminConfig } = await import("../src/scripts/admin-config.js");
+    expect(parseAdminConfig({ ADMIN_NAME: "Coverage Admin", ADMIN_EMAIL: "  ADMIN@EXAMPLE.COM ", ADMIN_PASSWORD: "StrongPassword123!" }).ADMIN_EMAIL)
+      .toBe("admin@example.com");
+    expect(() => parseAdminConfig({ ADMIN_NAME: "Coverage Admin", ADMIN_EMAIL: "admin@example.com", ADMIN_PASSWORD: "short" }))
+      .toThrow();
+  });
+});

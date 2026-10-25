@@ -1,16 +1,12 @@
 import "dotenv/config";
 import { hash } from "bcryptjs";
-import { z } from "zod";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { prisma } from "../modules/auth/prisma-user-repository.js";
+import { parseAdminConfig } from "./admin-config.js";
 
 export async function bootstrapAdmin(environment: NodeJS.ProcessEnv = process.env) {
-  const config = z.object({
-    ADMIN_NAME: z.string().trim().min(2),
-    ADMIN_EMAIL: z.string().trim().toLowerCase().pipe(z.email().max(254)),
-    ADMIN_PASSWORD: z.string().min(12),
-  }).parse(environment);
+  const config = parseAdminConfig(environment);
 
   const existing = await prisma.user.findUnique({ where: { email: config.ADMIN_EMAIL } });
   if (existing) {

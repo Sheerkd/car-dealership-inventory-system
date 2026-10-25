@@ -6,6 +6,7 @@ export default defineConfig({
       include: ["src/**/*.ts"],
       reporter: ["text", "json-summary"],
       reportsDirectory: "../../coverage/api",
+      thresholds: { lines: 80, branches: 85, functions: 85 },
     },
   },
 });

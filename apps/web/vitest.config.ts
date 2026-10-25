@@ -9,6 +9,7 @@ export default mergeConfig(viteConfig, defineConfig({
       include: ["src/**/*.{ts,tsx}"],
       reporter: ["text", "json-summary"],
       reportsDirectory: "../../coverage/web",
+      thresholds: { lines: 90, branches: 80, functions: 75 },
     },
   },
 }));
